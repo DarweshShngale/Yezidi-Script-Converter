@@ -1,0 +1,167 @@
+<html>
+<head>
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --background-color: #F3F4F6;
+            --card-color: #FFFFFF;
+            --text-color: #111827;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            font-family: 'Verdana', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-top: 40px;
+            font-size: 36px;
+            color: var(--primary-color);
+        }
+
+        .container {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 90%;
+        }
+
+        .textarea-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        textarea {
+            background: var(--card-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 16px;
+            width: 300px;
+            height: 300px;
+            padding: 20px;
+            font-size: 18px;
+            color: var(--text-color);
+            resize: none;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #4338CA;
+        }
+
+        @font-face {
+            font-family: YZIDI;
+            src: url(YZIDI.ttf);
+        }
+
+        #braille {
+            font-family: YZIDI, Verdana;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            textarea {
+                width: 90%;
+                height: 250px;
+            }
+        }
+    </style>
+    <title>Yezidi Transliterator</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var $inuk = document.getElementById("inuk");
+            var $braille = document.getElementById("braille");
+            var $copyBtn = document.getElementById("copyBtn");
+
+            $inuk.addEventListener('keyup', inukFunction);
+            $copyBtn.addEventListener('click', copyText);
+
+            function inukFunction() {
+                var inuk = $inuk.value;
+
+                for (const [latin, yezidi] of Object.entries(inukKey)) {
+                    var regex = new RegExp(latin, 'gi');
+                    inuk = inuk.replace(regex, yezidi);
+                }
+
+                $braille.value = inuk;
+            }
+
+            function copyText() {
+                $braille.select();
+                document.execCommand('copy');
+                alert('تم نسخ النص!');
+            }
+
+            const inukKey = {
+                "Q": "𐺜",
+                "W": "𐺤",
+                "E": "𐺦",
+                "Ê": "𐺩",
+                "R": "𐺍",
+                "T": "𐺄",
+                "Y": "𐺱",
+                "U": "𐺣",
+                "I": "𐺫",
+                "O": "𐺥",
+                "P": "𐺃",
+                "A": "𐺀",
+                "S": "𐺑",
+                "D": "𐺋",
+                "F": "𐺙",
+                "G": "𐺟",
+                "H": "𐺧",
+                "J": "𐺐",
+                "K": "𐺝",
+                "L": "𐺠",
+                "Şh": "𐺒",
+                "İ": "𐺨",
+                "Z": "𐺏",
+                "X": "𐺊",
+                "C": "𐺆",
+                "Ç": "𐺇",
+                "V": "𐺛",
+                "B": "𐺁",
+                "N": "𐺢",
+                "M": "𐺡",
+                "Û": "𐺣𐺣"
+            };
+        }, false);
+    </script>
+</head>
+<body>
+    <h1>Yezidi Script Converter</h1>
+    <div class="container">
+        <div class="textarea-container">
+            <textarea spellcheck="false" id="inuk" placeholder="Enter Latin text" style="direction:ltr"></textarea>
+        </div>
+        <div class="textarea-container">
+            <textarea contenteditable="false" id="braille" placeholder="Yezidi script output here" style="direction:rtl"></textarea>
+            <button id="copyBtn">نسخ النص</button>
+        </div>
+    </div>
+</body>
+</html>

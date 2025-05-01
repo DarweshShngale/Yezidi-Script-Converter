@@ -101,13 +101,15 @@
 
             function inukFunction() {
                 var inuk = $inuk.value;
-
                 const sortedKeys = Object.keys(inukKey).sort((a, b) => b.length - a.length);
                 for (const key of sortedKeys) {
                     const regex = new RegExp(key, 'gi');
-                    inuk = inuk.replace(regex, inukKey[key]);
+                    inuk = inuk.replace(regex, match => {
+                        const lower = match.toLowerCase();
+                        const upper = match.toUpperCase();
+                        return inukKey[lower] || inukKey[upper] || match;
+                    });
                 }
-
                 $braille.value = inuk;
             }
 
@@ -118,37 +120,37 @@
             }
 
             const inukKey = {
-                "Şh": "𐺒",
-                "Q": "𐺜",
-                "W": "𐺤",
-                "E": "𐺦",
-                "Ê": "𐺩",
-                "R": "𐺍",
-                "T": "𐺄",
-                "Y": "𐺱",
-                "U": "𐺣",
-                "I": "𐺫",
-                "O": "𐺥",
-                "P": "𐺃",
-                "A": "𐺀",
-                "S": "𐺑",
-                "D": "𐺋",
-                "F": "𐺙",
-                "G": "𐺟",
-                "H": "𐺧",
-                "J": "𐺐",
-                "K": "𐺝",
-                "L": "𐺠",
-                "İ": "𐺨",
-                "Z": "𐺏",
-                "X": "𐺊",
-                "C": "𐺆",
-                "Ç": "𐺇",
-                "V": "𐺛",
-                "B": "𐺁",
-                "N": "𐺢",
-                "M": "𐺡",
-                "Û": "𐺣𐺣"
+                "sh": "𐺒",
+                "q": "𐺜",
+                "w": "𐺤",
+                "e": "𐺦",
+                "ê": "𐺩",
+                "r": "𐺍",
+                "t": "𐺄",
+                "y": "𐺱",
+                "u": "𐺣",
+                "i": "𐺫",
+                "o": "𐺥",
+                "p": "𐺃",
+                "a": "𐺀",
+                "s": "𐺑",
+                "d": "𐺋",
+                "f": "𐺙",
+                "g": "𐺟",
+                "h": "𐺧",
+                "j": "𐺐",
+                "k": "𐺝",
+                "l": "𐺠",
+                "i̇": "𐺨",
+                "z": "𐺏",
+                "x": "𐺊",
+                "c": "𐺆",
+                "ç": "𐺇",
+                "v": "𐺛",
+                "b": "𐺁",
+                "n": "𐺢",
+                "m": "𐺡",
+                "û": "𐺣𐺣"
             };
         }, false);
     </script>

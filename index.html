@@ -102,9 +102,10 @@
             function inukFunction() {
                 var inuk = $inuk.value;
 
-                for (const [latin, yezidi] of Object.entries(inukKey)) {
-                    var regex = new RegExp(latin, 'gi');
-                    inuk = inuk.replace(regex, yezidi);
+                const sortedKeys = Object.keys(inukKey).sort((a, b) => b.length - a.length);
+                for (const key of sortedKeys) {
+                    const regex = new RegExp(key, 'gi');
+                    inuk = inuk.replace(regex, inukKey[key]);
                 }
 
                 $braille.value = inuk;
@@ -117,6 +118,7 @@
             }
 
             const inukKey = {
+                "Şh": "𐺒",
                 "Q": "𐺜",
                 "W": "𐺤",
                 "E": "𐺦",
@@ -137,7 +139,6 @@
                 "J": "𐺐",
                 "K": "𐺝",
                 "L": "𐺠",
-                "Şh": "𐺒",
                 "İ": "𐺨",
                 "Z": "𐺏",
                 "X": "𐺊",
